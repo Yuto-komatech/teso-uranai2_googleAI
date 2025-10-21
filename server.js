@@ -18,6 +18,12 @@ const genAI = new GoogleGenerativeAI(apiKey);
 // gemini-1.5-flash を使用 (元のコードの 'gemini-2.5-flash-image' に相当するマルチモーダルモデル)
 const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
+const listModels = async () => {
+    const { models } = await genAI.listModels();
+    console.log("利用可能なモデル:", models.map(m => m.name));
+};
+listModels();
+
 // ミドルウェアの設定
 // 画像データ(Base64)を送受信するため、JSONのサイズ制限を緩和
 app.use(express.json({ limit: '10mb' })); 
