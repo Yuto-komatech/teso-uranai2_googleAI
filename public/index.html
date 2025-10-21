@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gemini手相占い</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Shippori+Mincho:wght@700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+    </head>
+
+<body>
+    <header>
+        <h1>Gemini AI 手相占い</h1>
+        <p>Googleの最新AI、Geminiがあなたの手相を鑑定します。</p>
+    </header>
+
+    <main>
+        <div class="upload-container">
+            <h2>1. 手のひらの写真をアップロード</h2>
+            <input type="file" id="imageUploader" accept="image/*" style="display: none;">
+            <label for="imageUploader" class="custom-file-upload">ファイルを選択</label>
+            
+            <img id="imagePreview" src="" alt="手相のプレビュー">
+        </div>
+
+        <button id="analyzeButton">この手相で占う</button>
+
+        <div id="loader" class="hidden"></div>
+
+        <div id="resultContainer" class="hidden">
+            <h2>2. 鑑定結果</h2>
+            <p id="resultText">ここに鑑定結果が表示されます。</p>
+        </div>
+
+        </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

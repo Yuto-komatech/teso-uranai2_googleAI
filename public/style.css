@@ -1,0 +1,212 @@
+/* --- 基本設定 --- */
+body {
+    font-family: 'Noto Sans JP', sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #E0E0E0; /* 明るいグレーのテキスト */
+    
+    /* 神秘的で鮮やかなアニメーショングラデーション背景 */
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e, #4a00e0);
+    background-size: 400% 400%;
+    animation: gradientBG 18s ease infinite;
+    min-height: 100vh;
+}
+
+/* 背景グラデーションのアニメーション */
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* --- ヘッダー --- */
+header {
+    text-align: center;
+    padding: 40px 20px 20px 20px;
+}
+
+header h1 {
+    font-family: 'Shippori Mincho', serif; /* 神秘的な明朝体 */
+    font-size: 2.8em;
+    margin: 0;
+    color: #FFFFFF;
+    /* 鮮やかな発光エフェクト (Glow) */
+    text-shadow: 0 0 10px #E0BBE4, 0 0 20px #E0BBE4;
+}
+
+header p {
+    font-size: 1.1em;
+    color: #D3D3D3;
+}
+
+/* --- メインコンテンツ --- */
+main {
+    max-width: 600px;
+    margin: 20px auto 40px auto;
+    padding: 30px;
+    /* すりガラス風の背景 */
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+h2 {
+    font-family: 'Shippori Mincho', serif;
+    color: #E0BBE4; /* 鮮やかなアクセントカラー */
+    border-bottom: 2px solid #E0BBE4;
+    padding-bottom: 5px;
+    text-shadow: 0 0 5px #E0BBE4;
+}
+
+/* --- アップロードセクション --- */
+.upload-container {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+/* ファイル選択ボタンのカスタムスタイル */
+.custom-file-upload {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1em;
+    font-weight: bold;
+    color: #333;
+    background-color: #E0BBE4;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.custom-file-upload:hover {
+    background-color: #FFFFFF;
+    transform: scale(1.05);
+}
+
+/* 画像プレビュー */
+#imagePreview {
+    max-width: 100%;
+    height: auto;
+    margin-top: 20px;
+    border-radius: 8px;
+    border: 2px dashed #777;
+    display: none; /* JSで画像がセットされたら表示 */
+}
+
+/* JSでsrcがセットされた時のスタイル */
+#imagePreview[src] {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border: 2px solid #E0BBE4;
+    box-shadow: 0 0 15px #E0BBE4;
+}
+
+/* --- 占いボタン --- */
+#analyzeButton {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #FFFFFF;
+    /* 鮮やかなグラデーションボタン */
+    background: linear-gradient(90deg, #8E2DE2, #4A00E0);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-shadow: 0 0 5px rgba(0,0,0,0.5);
+    margin-top: 10px;
+}
+
+#analyzeButton:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 20px #E0BBE4;
+}
+
+/* 鑑定中はボタンを非表示 */
+#analyzeButton.loading {
+    display: none;
+}
+
+/* --- ローダー (鑑定中アニメーション) --- */
+#loader {
+    border: 5px solid #f3f3f3; /* Light grey */
+    border-top: 5px solid #E0BBE4; /* Vibrant purple */
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* --- 結果表示 --- */
+#resultContainer {
+    margin-top: 30px;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    /* 結果をフェードインさせるための準備 */
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+#resultText {
+    font-size: 1.1em;
+    line-height: 1.7;
+    white-space: pre-wrap; /* AIの改行をそのまま表示する */
+    color: #FFF;
+}
+
+/* --- ユーティリティクラス --- */
+.hidden {
+    display: none;
+}
+
+/* JSでこのクラスを付け外ししてアニメーションを制御 */
+#resultContainer.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* --- ★ 削除: 画像生成 (#captureArea) 関連のスタイルをすべて削除 --- */
+/* #captureArea { ... } */
+/* .fortune-card { ... } */
+/* (以下、.card-footer まで関連スタイルを削除) */
+
+
+/* --- ★★★ ここから下を style.css の一番最後に追加 ★★★ --- */
+/* (元のコードから流用) */
+
+/* ★ 削除: QRコードエリアのスタイル (元のコードで削除済み) */
+
+/* ★ 修正: ボタンのIDを #copyButton に変更 (元のコードから流用) */
+#copyButton {
+    display: none; /* 初期は非表示 */
+    margin: 10px auto; 
+    padding: 12px 25px;
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #FFF;
+    background-color: #28a745; /* 成功・コピーの緑色 */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    width: fit-content;
+    box-shadow: 0 0 15px rgba(40, 167, 69, 0.7);
+}
+
+#copyButton:hover {
+    background-color: #218838;
+    transform: scale(1.05);
+}

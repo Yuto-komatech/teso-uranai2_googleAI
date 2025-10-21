@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>占いカードHTMLジェネレーター</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Hiragino Sans', 'Noto Sans CJK JP', sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            border-bottom: 2px solid #4a90e2;
+            padding-bottom: 10px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #555;
+        }
+        .form-group input[type="text"],
+        .form-group input[type="number"],
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            box-sizing: border-box; /* パディングを含めて幅100%にする */
+            font-size: 1em;
+        }
+        .form-group textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+        .rating-group {
+            display: flex;
+            gap: 10px;
+        }
+        .rating-group .stars-input {
+            width: 80px;
+        }
+        .rating-group .comment-input {
+            flex: 1;
+        }
+        .btn-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+        button {
+            background-color: #4a90e2;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #3b73b5;
+        }
+        #output-container {
+            margin-top: 30px;
+        }
+        #output-html {
+            width: 100%;
+            height: 400px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            padding: 10px;
+            box-sizing: border-box;
+            font-family: Consolas, 'Courier New', monospace;
+            font-size: 0.9em;
+            white-space: pre;
+            overflow: auto;
+        }
+        #copy-btn {
+            display: block;
+            margin: 10px auto 0;
+            background-color: #28a745;
+        }
+        #copy-btn:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>占いカードHTMLジェネレーター</h1>
+
+        <div class="form-group">
+            <label for="type-name">① タイプ名（例: 堅実な努力家タイプ！）</label>
+            <input type="text" id="type-name" value="堅実な努力家タイプ！">
+        </div>
+
+        <div class="form-group">
+            <label for="description">② 説明文（例: 目標に向かって着実に進む...）</label>
+            <textarea id="description">目標に向かって着実に進む、真面目で信頼される存在！</textarea>
+        </div>
+
+        <div class="form-group">
+            <label>③ 総合運勢バランス</label>
+            <div class="rating-group">
+                <input type="number" id="love-rating" class="stars-input" value="4" min="0" max="5" title="恋愛（星の数）">
+                <input type="text" id="love-comment" class="comment-input" value="(安定した愛情を育むことができますが、時にはサプライズも大切に😉)" placeholder="恋愛コメント">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="rating-group">
+                <input type="number" id="work-rating" class="stars-input" value="5" min="0" max="5" title="仕事（星の数）">
+                <input type="text" id="work-comment" class="comment-input" value="(努力が報われ、着実にキャリアを築いていけるでしょう！✨)" placeholder="仕事コメント">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="rating-group">
+                <input type="number" id="money-rating" class="stars-input" value="4" min="0" max="5" title="金運（星の数）">
+                <input type="text" id="money-comment" class="comment-input" value="(堅実な金銭感覚で、着実に貯蓄を増やしていけますよ👛)" placeholder="金運コメント">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="rating-group">
+                <input type="number" id="relation-rating" class="stars-input" value="4" min="0" max="5" title="人間関係（星の数）">
+                <input type="text" id="relation-comment" class="comment-input" value="(深い愛情と優しさで、周囲からの信頼も厚いでしょう🤝)" placeholder="人間関係コメント">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="rating-group">
+                <input type="number" id="luck-rating" class="stars-input" value="4" min="0" max="5" title="運勢（星の数）">
+                <input type="text" id="luck-comment" class="comment-input" value="(安定した運勢ですが、時には冒険心を持つとさらに開運しますよ🚀)" placeholder="運勢コメント">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="rating-group">
+                <input type="number" id="mental-rating" class="stars-input" value="4" min="0" max="5" title="メンタル（星の数）">
+                <input type="text" id="mental-comment" class="comment-input" value="(困難にも動じない強い心を持っていますが、息抜きも忘れずに☕)" placeholder="メンタルコメント">
+            </div>
+        </div>
+
+        <div class="btn-container">
+            <button id="generate-btn">HTMLコードを生成</button>
+        </div>
+
+        <div id="output-container">
+            <label for="output-html"><strong>生成されたHTMLコード:</strong></label>
+            <textarea id="output-html" readonly></textarea>
+            <button id="copy-btn">コードをクリップボードにコピー</button>
+        </div>
+    </div>
+
+    <script>
+        // 星を生成する関数
+        function generateStars(rating) {
+            let stars = '';
+            const filledStar = '★';
+            const emptyStar = '☆';
+            for (let i = 0; i < 5; i++) {
+                if (i < rating) {
+                    stars += filledStar;
+                } else {
+                    stars += emptyStar;
+                }
+            }
+            return stars;
+        }
+
+        // HTMLテンプレート
+        function createHtmlTemplate(data) {
+            return `<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>あなたの運勢</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Hiragino Sans', 'Noto Sans CJK JP', sans-serif;
+            background-color: #f4f7f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .fortune-card {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+            overflow: hidden;
+            border: 1px solid #e0e0e0;
+        }
+        .card-header {
+            background-color: #4a90e2;
+            color: white;
+            padding: 20px 30px;
+            text-align: center;
+        }
+        .card-header h1 {
+            margin: 0;
+            font-size: 1.6em;
+            font-weight: bold;
+        }
+        .card-body {
+            padding: 30px;
+        }
+        .card-body p {
+            text-align: center;
+            font-size: 1.1em;
+            color: #333;
+            margin-top: 0;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+        .card-body h2 {
+            font-size: 1.25em;
+            color: #4a90e2;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .stars-list {
+            list-style-type: none;
+            padding-left: 0;
+            font-size: 1em;
+            color: #555;
+        }
+        .stars-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .stars-list li:last-child {
+            border-bottom: none;
+        }
+        .stars-list strong {
+            flex-shrink: 0;
+            margin-right: 15px;
+            color: #333;
+        }
+        .stars-list .rating {
+            text-align: right;
+        }
+        .stars-list .stars {
+            color: #FFD700;
+            font-size: 1.2em;
+            letter-spacing: 1px;
+            white-space: nowrap;
+        }
+        .stars-list .comment {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 4px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="fortune-card">
+        <div class="card-header">
+            <h1>あなたはズバリ<br><strong>${data.typeName}</strong></h1>
+        </div>
+        <div class="card-body">
+            <p>${data.description}</p>
+            
+            <h2>総合運勢バランス</h2>
+            
+            <ul class="stars-list">
+                <li>
+                    <strong>恋愛:</strong> 
+                    <span class="rating">
+                        <span class="stars">${data.loveStars}</span>
+                        <small class="comment">${data.loveComment}</small>
+                    </span>
+                </li>
+                <li>
+                    <strong>仕事:</strong> 
+                    <span class="rating">
+                        <span class="stars">${data.workStars}</span>
+                        <small class="comment">${data.workComment}</small>
+                    </span>
+                </li>
+                <li>
+                    <strong>金運:</strong> 
+                    <span class="rating">
+                        <span class="stars">${data.moneyStars}</span>
+                        <small class="comment">${data.moneyComment}</small>
+                    </span>
+                </li>
+                <li>
+                    <strong>人間関係:</strong> 
+                    <span class="rating">
+                        <span class="stars">${data.relationStars}</span>
+                        <small class="comment">${data.relationComment}</small>
+                    </span>
+                </li>
+                <li>
+                    <strong>運勢:</strong> 
+                    <span class="rating">
+                        <span class="stars">${data.luckStars}</span>
+                        <small class="comment">${data.luckComment}</small>
+                    </span>
+                </li>
+                <li>
+                    <strong>メンタルの強さ:</strong> 
+                    <span class="rating">
+                        <span class="stars">${data.mentalStars}</span>
+                        <small class="comment">${data.mentalComment}</small>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</body>
+</html>`;
+        }
+
+        // 生成ボタンのクリックイベント
+        document.getElementById('generate-btn').addEventListener('click', function() {
+            // フォームからデータを取得
+            const data = {
+                typeName: document.getElementById('type-name').value,
+                description: document.getElementById('description').value,
+                
+                loveStars: generateStars(document.getElementById('love-rating').value),
+                loveComment: document.getElementById('love-comment').value,
+                
+                workStars: generateStars(document.getElementById('work-rating').value),
+                workComment: document.getElementById('work-comment').value,
+                
+                moneyStars: generateStars(document.getElementById('money-rating').value),
+                moneyComment: document.getElementById('money-comment').value,
+                
+                relationStars: generateStars(document.getElementById('relation-rating').value),
+                relationComment: document.getElementById('relation-comment').value,
+                
+                luckStars: generateStars(document.getElementById('luck-rating').value),
+                luckComment: document.getElementById('luck-comment').value,
+                
+                mentalStars: generateStars(document.getElementById('mental-rating').value),
+                mentalComment: document.getElementById('mental-comment').value
+            };
+
+            // HTMLを生成
+            const generatedHtml = createHtmlTemplate(data);
+
+            // 出力エリアに表示
+            document.getElementById('output-html').value = generatedHtml;
+        });
+
+        // コピーボタンのクリックイベント
+        document.getElementById('copy-btn').addEventListener('click', function() {
+            const outputHtml = document.getElementById('output-html');
+            outputHtml.select(); // テキストを選択
+            document.execCommand('copy'); // クリップボードにコピー
+            alert('コードをコピーしました！');
+        });
+        
+        // 初期読み込み時にも一度生成しておく
+        document.getElementById('generate-btn').click();
+
+    </script>
+</body>
+</html>
