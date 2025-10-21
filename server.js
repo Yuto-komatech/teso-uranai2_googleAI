@@ -16,7 +16,7 @@ if (!apiKey || !apiKey.startsWith('AIzaSy')) {
 // Google AI SDK の初期化
 const genAI = new GoogleGenerativeAI(apiKey);
 // gemini-1.5-flash を使用 (元のコードの 'gemini-2.5-flash-image' に相当するマルチモーダルモデル)
-const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
+const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash-image' });
 
 
 
